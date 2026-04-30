@@ -1,0 +1,102 @@
+# Netlify Configuration for Pro Resume Builder
+
+[build]
+  command = "npm run build"
+    publish = "dist"
+      environment = { NODE_VERSION = "18.17.0" }
+
+      [[redirects]]
+        from = "/*"
+          to = "/index.html"
+            status = 200
+
+            # API Redirects for backend
+            [[redirects]]
+              from = "/api/*"
+                to = "https://api.resumebuilder.com/.netlify/functions/:splat"
+                  status = 200
+
+                  # Security Headers
+                  [[headers]]
+                    for = "/*"
+                      [headers.values]
+                          X-Frame-Options = "DENY"
+                              X-Content-Type-Options = "nosniff"
+                                  X-XSS-Protection = "1; mode=block"
+                                      Referrer-Policy = "no-referrer"
+                                          Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+
+                                          # Content Security Policy
+                                          [[headers]]
+                                            for = "/*"
+                                              [headers.values]
+                                                  Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://api.openai.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://api.stripe.com https://api.openai.com"
+
+                                                  # Cache Control
+                                                  [[headers]]
+                                                    for = "/static/*"
+                                                      [headers.values]
+                                                          Cache-Control = "public, max-age=31536000, immutable"
+
+                                                          [[headers]]
+                                                            for = "/index.html"
+                                                              [headers.values]
+                                                                  Cache-Control = "public, max-age=3600, must-revalidate"
+
+                                                                  # Environment Variables
+                                                                  [context.production.environment]
+                                                                    OPENAI_API_KEY = "$OPENAI_API_KEY"
+                                                                      STRIPE_PUBLIC_KEY = "$STRIPE_PUBLIC_KEY"
+                                                                        STRIPE_SECRET_KEY = "$STRIPE_SECRET_KEY"
+                                                                          DATABASE_URL = "$DATABASE_URL"
+                                                                            MONGODB_URI = "$MONGODB_URI"
+                                                                              JWT_SECRET = "$JWT_SECRET"
+                                                                                CORS_ORIGIN = "https://resumebuilder.com"
+
+                                                                                [context.preview.environment]
+                                                                                  OPENAI_API_KEY = "$OPENAI_API_KEY_PREVIEW"
+                                                                                    STRIPE_PUBLIC_KEY = "$STRIPE_PUBLIC_KEY_PREVIEW"
+                                                                                      STRIPE_SECRET_KEY = "$STRIPE_SECRET_KEY_PREVIEW"
+                                                                                        DATABASE_URL = "$DATABASE_URL_PREVIEW"
+                                                                                          MONGODB_URI = "$MONGODB_URI_PREVIEW"
+                                                                                            JWT_SECRET = "$JWT_SECRET_PREVIEW"
+                                                                                              CORS_ORIGIN = "https://preview-resumebuilder.netlify.app"
+
+                                                                                              [context.develop.environment]
+                                                                                                OPENAI_API_KEY = "$OPENAI_API_KEY_DEV"
+                                                                                                  STRIPE_PUBLIC_KEY = "pk_test_*"
+                                                                                                    STRIPE_SECRET_KEY = "$STRIPE_SECRET_KEY_DEV"
+                                                                                                      DATABASE_URL = "$DATABASE_URL_LOCAL"
+                                                                                                        MONGODB_URI = "mongodb://localhost:27017/resume-builder"
+                                                                                                          JWT_SECRET = "dev-secret-key"
+                                                                                                            CORS_ORIGIN = "http://localhost:3000"
+                                                                                                            
+                                                                                                            # Functions Configuration
+                                                                                                            [functions]
+                                                                                                              included_files = ["src/api/**"]
+                                                                                                                node_bundler = "esbuild"
+                                                                                                                
+                                                                                                                # Build Plugins
+                                                                                                                [[plugins]]
+                                                                                                                  package = "@netlify/plugin-nextjs"
+                                                                                                                    [plugins.inputs]
+                                                                                                                        distDir = ".next"
+                                                                                                                        
+                                                                                                                        # Scheduled Functions
+                                                                                                                        [[functions]]
+                                                                                                                          name = "resume-optimization"
+                                                                                                                            handler = "src/functions/resume-optimization.js"
+                                                                                                                              [functions.schedule]
+                                                                                                                                  cron = "0 0 * * *"
+                                                                                                                                  
+                                                                                                                                  # Notifications
+                                                                                                                                  [[context.production.environment]]
+                                                                                                                                    SLACK_WEBHOOK_URL = "$SLACK_WEBHOOK_URL"
+                                                                                                                                    
+                                                                                                                                    # Custom Domains
+                                                                                                                                    [dev]
+                                                                                                                                      framework = "react"
+                                                                                                                                        port = 3000
+                                                                                                                                          publish = "dist"
+                                                                                                                                            targetPort = 3000
+                                                                                                                                              autoLaunch = true
