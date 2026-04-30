@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Payment confirmation page for Pro Resume Builder">
+        <title>Thank You - Pro Resume Builder</title>
+      <style>
+                * {
+                              margin: 0;
+                              padding: 0;
+                              box-sizing: border-box;
+                }
+
+                body {
+                              font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Tahoma', 'Arial', sans-serif;
+                              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                              min-height: 100vh;
+                              display: flex;
+                              align-items: center;
+                              justify-content: center;
+                              padding: 20px;
+                }
+
+                .container {
+                              background: white;
+                              padding: 60px 40px;
+                              border-radius: 12px;
+                              box-shadow: 0 10px 50px rgba(0, 0, 0, 0.3);
+                              max-width: 600px;
+                              width: 100%;
+                              text-align: center;
+                }
+
+                .success-icon {
+                              font-size: 80px;
+                              margin-bottom: 30px;
+                              aria-hidden: "true";
+                }
+
+                h1 {
+                              font-size: 36px;
+                              color: #0d121f;
+                              margin-bottom: 20px;
+                }
+
+                h2 {
+                              font-size: 20px;
+                              color: #0d121f;
+                              margin-bottom: 15px;
+                              margin-top: 30px;
+                }
+
+                .subtitle {
+                              font-size: 16px;
+                              color: #526078;
+                              margin-bottom: 40px;
+                }
+
+                .order-details {
+                              background: #f5f7fa;
+                              padding: 30px;
+                              border-radius: 8px;
+                              margin-bottom: 40px;
+                              text-align: left;
+                }
+
+                .detail-row {
+                              display: flex;
+                              justify-content: space-between;
+                              padding: 12px 0;
+                              border-bottom: 1px solid #e0e0e0;
+                }
+
+                .detail-row:last-child {
+                              border-bottom: none;
+                }
+
+                .detail-label {
+                              color: #526078;
+                              font-weight: bold;
+                }
+
+                .detail-value {
+                              color: #0d121f;
+                              font-weight: bold;
+                }
+
+                .status-completed {
+                              color: #1bae6e;
+                }
+
+                .cta-btn {
+                              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                              color: white;
+                              padding: 15px 40px;
+                              border: none;
+                              border-radius: 8px;
+                              font-size: 16px;
+                              font-weight: bold;
+                              cursor: pointer;
+                              text-decoration: none;
+                              display: inline-block;
+                              transition: transform 0.3s, box-shadow 0.3s;
+                }
+
+                .cta-btn:hover {
+                              transform: translateY(-2px);
+                              box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+                }
+
+                .cta-btn:focus {
+                              outline: 2px solid #667eea;
+                              outline-offset: 2px;
+                }
+
+                .footer-text {
+                              margin-top: 40px;
+                              font-size: 14px;
+                              color: #8291a9;
+                }
+
+                .email-sent {
+                              background: #e8f5e9;
+                              border-left: 4px solid #1bae6e;
+                              padding: 15px;
+                              margin-bottom: 30px;
+                              border-radius: 4px;
+                              font-size: 14px;
+                              color: #2e7d32;
+                }
+
+                .next-steps {
+                              text-align: left;
+                              color: #526078;
+                              margin-bottom: 30px;
+                }
+
+                .next-steps ol {
+                              margin-left: 20px;
+                }
+
+                .next-steps li {
+                              margin-bottom: 10px;
+                }
+
+                /* Responsive Design */
+                @media (max-width: 600px) {
+                              .container {
+                                                padding: 40px 20px;
+                              }
+
+                              h1 {
+                                                font-size: 28px;
+                              }
+
+                              h2 {
+                                                font-size: 18px;
+                              }
+
+                              .success-icon {
+                                                font-size: 60px;
+                              }
+
+                              .cta-btn {
+                                                padding: 12px 30px;
+                                                font-size: 14px;
+                              }
+                }
+
+                @media (prefers-reduced-motion: reduce) {
+                              * {
+                                                animation: none !important;
+                                                transition: none !important;
+                              }
+                }
+            </style>
+  </head>
+  <body>
+        <main class="container" role="main">
+                  <div class="success-icon" aria-hidden="true">✅</div>div>
+
+                  <h1>Payment Successful!</h1>
+                <p class="subtitle">Thank you for your purchase. Your resume is being prepared.</p>p>
+        
+                <div class="email-sent" role="status">
+                            📧 A confirmation email has been sent to your inbox with download instructions.
+                </div>div>
+        
+                <div class="order-details" aria-label="Order details">
+                            <div class="detail-row">
+                                            <span class="detail-label">Plan:</span>span>
+                                            <span class="detail-value" id="planName">Professional</span>span>
+                            </div>div>
+                            <div class="detail-row">
+                                            <span class="detail-label">Amount:</span>span>
+                                            <span class="detail-value" id="amount">€9.00</span>span>
+                            </div>div>
+                            <div class="detail-row">
+                                            <span class="detail-label">Status:</span>span>
+                                            <span class="detail-value status-completed" id="status">✓ Completed</span>span>
+                            </div>div>
+                </div>div>
+        
+                <h2>What's Next?</h2>
+                <div class="next-steps">
+                            <ol>
+                                              <li>Check your email for the download link</li>
+                                            <li>Download your professional resume in PDF format</li>
+                                            <li>Customize it further if needed</li>
+                                            <li>Start sending it to employers</li>
+                            </ol>
+                </div>div>
+        
+                <a href="/" class="cta-btn">Back to Home</a>a>
+        
+                <div class="footer-text">
+                            <p>Questions? Contact us at <strong>support@resumebuilder.eu</strong></p>
+                            <p style="margin-top: 10px;">7-day money-back guarantee • No questions asked</p>
+                </div>div>
+        </main>main>
+  
+      <script>
+                // Sanitize URL parameters to prevent XSS attacks
+                function sanitizeInput(input) {
+                              const div = document.createElement('div');
+                              div.textContent = input;
+                              return div.innerHTML;
+                }
+
+                // Get and validate URL parameters
+                const params = new URLSearchParams(window.location.search);
+                const plan = params.get('plan') || 'Professional';
+                const amount = params.get('amount') || '9';
+
+                // Validate amount is a valid number
+                const validAmount = !isNaN(amount) && amount > 0 ? amount : '9';
+
+                // Insert sanitized data into the page
+                document.getElementById('planName').textContent = sanitizeInput(plan);
+                document.getElementById('amount').textContent = '€' + sanitizeInput(validAmount) + '.00';
+
+                // Log for debugging (remove in production)
+                console.log('Order loaded:', { plan: plan, amount: validAmount });
+      </script>
+  </body>
+</html>html>
+      </script></strong></p></li></li>
+                            </ol></h2></h1>
+  </body>
+      </style></title>
+  </head>
